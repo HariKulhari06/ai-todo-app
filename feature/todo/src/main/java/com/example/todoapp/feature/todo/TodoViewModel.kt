@@ -97,6 +97,9 @@ class TodoViewModel(
             return object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    require(modelClass.isAssignableFrom(TodoViewModel::class.java)) {
+                        "Unknown ViewModel class: ${modelClass.name}"
+                    }
                     return TodoViewModel(
                         observeTodosUseCase = ObserveTodosUseCase(repository),
                         addTodoUseCase = AddTodoUseCase(repository),
