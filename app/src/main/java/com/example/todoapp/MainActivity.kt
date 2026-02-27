@@ -7,8 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.core.designsystem.theme.TodoAppTheme
+import com.example.todoapp.core.navigation.DashboardDestination
+import com.example.todoapp.core.navigation.DetailDestination
 import com.example.todoapp.core.navigation.IntroDestination
-import com.example.todoapp.feature.todo.todoScreen
+import com.example.todoapp.feature.onboarding.onboardingScreen
+import com.example.todoapp.feature.todo.detail.detailScreen
+import com.example.todoapp.feature.todo.home.homeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +25,9 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = IntroDestination.route
                 ) {
-                    todoScreen(navController)
+                    onboardingScreen(onGetStarted = { navController.navigate(DashboardDestination.route) })
+                    homeScreen(onCardClick = { cardId -> navController.navigate(DetailDestination.createRoute(cardId)) })
+                    detailScreen(onClose = { navController.popBackStack() })
                 }
             }
         }
